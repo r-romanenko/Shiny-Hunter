@@ -41,7 +41,7 @@ print(f"Press \'{begin_hunt_key}\' once Tepig is in battle and has been on the g
 keyboard.wait('x')
 reset_x, reset_y = pyautogui.position()
 print(f"\nreset x: {reset_x}, reset y: {reset_y}")
-pyautogui.click()
+pyautogui.click(reset_x, reset_y)
 
 seconds_between_check_timer = current_milli_time()
 keyboard.wait('h')
@@ -55,6 +55,7 @@ print(f"The hunt has begun! Feel free to get up and leave. Eventually, there wil
 # then after that time is up, check if it's a shiny. If it is, break
 
 start_time = current_milli_time()
+pyautogui.click(reset_x, reset_y) 
 regular_tepig_color = (189, 99, 49)
 shiny_tepig_color = (189, 156, 49)
 
@@ -67,6 +68,7 @@ while True:
         if color == regular_tepig_color:
             num_of_attempts += 1
             print(f"regular tepig #{num_of_attempts}")
+            pyautogui.click(reset_x, reset_y)
         elif color == shiny_tepig_color:
             print(f"SHINY FOUND!!! ({num_of_attempts} tries)")
             break
