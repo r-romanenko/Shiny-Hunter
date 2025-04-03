@@ -17,38 +17,24 @@ def current_milli_time():
 
 
 
-# wait 5 seconds
-sleep_time = 3
-seconds_to_wait = 3
-seconds_between_check = 20
+sleep_time = 3 # seconds to wait to allow user to switch to emulator
+# seconds_to_wait = 3 # seconds to wait for user to be still (irrelevant)
+confirm_key = 'x' # the key used to proceed with the program's steps
+seconds_between_check = 5 # default value to mash x for before checking the pixel color
 
 print(f"Sleeping for {sleep_time} seconds. Use this time to switch to Pokemon window.")
 time.sleep(sleep_time)
-# print("after sleep")
 
 
 start_time = current_milli_time()
 
-
-print(f"Checking if you're still for {seconds_to_wait} seconds.")
-print(f"Hover over the Reset button for {seconds_to_wait} seconds.")
+print(f"Hover over the Reset button and press \'{confirm_key}\' ")
 
 reset_x, reset_y = pyautogui.position()
-# prev_reset_x, prev_reset_y = reset_x, reset_y
 
-# print(f"Checking if you're still for {seconds_to_wait} seconds.")
-
-# while start_time + (seconds_to_wait * 1000) > current_milli_time():
-#     reset_x, reset_y = pyautogui.position()
-
-#     if prev_reset_x != reset_x or prev_reset_y != reset_y:
-#         # restart
-#         start_time = current_milli_time()
-
-#     prev_reset_x = reset_x
-#     prev_reset_y = reset_y
 
 keyboard.wait('x')
+print(f"reset x: {reset_x}, reset y: {reset_y}")
 reset_x, reset_y = pyautogui.position()
 
 
@@ -56,22 +42,12 @@ reset_x, reset_y = pyautogui.position()
 start_time = current_milli_time()
 
 
+print(f"Hover over Tepig and press \'{confirm_key}\'")
 keyboard.wait('x')
 x, y = pyautogui.position()
-# prev_x, prev_y = x, y
 
-print(f"Checking if you're still for {seconds_to_wait} seconds again.")
-print(f"Hover over Tepig for {seconds_to_wait} seconds.")
+# one more thing I want to do is to have the user define how long to wait
 
-# while start_time + (seconds_to_wait * 1000) > current_milli_time():
-#     x, y = pyautogui.position()
-
-#     if prev_x != x or prev_y != y:
-#         # restart
-#         start_time = current_milli_time()
-
-#     prev_x = x
-#     prev_y = y
 
 
 
@@ -91,18 +67,20 @@ start_time = current_milli_time()
 regular_tepig_color = (189, 99, 49)
 shiny_tepig_color = (189, 156, 49)
 
-num_of_regulars = 0
+num_of_attempts = 0
 
 while True:
     color = image.getpixel((x, y))
     if start_time + (seconds_between_check * 1000) < current_milli_time():
         start_time = current_milli_time()
         if color == regular_tepig_color:
-            print("regular tepig")
-            num_of_regulars += 1
+            num_of_attempts += 1
+            print(f"regular tepig #{num_of_attempts}")
         elif color == shiny_tepig_color:
-            print(f"SHINY FOUND!!! ({num_of_regulars} tries)")
+            print(f"SHINY FOUND!!! ({num_of_attempts} tries)")
             break
+        else:
+            print(f"Uh oh! Not spotting any sort of tepig")
     
     # spam 'x'
     keyboard.press_and_release('x')
