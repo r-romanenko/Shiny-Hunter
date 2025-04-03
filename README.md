@@ -1,3 +1,6 @@
+# About
+This is a quick python script I wrote up that helps you perform an automated shiny hunt of specifically Tepig in a Pokemon Black/White emulator (I wrote this based on the `DeSmuME` emulator).
+
 # Setup
 Type these two commands into the terminal:
 
